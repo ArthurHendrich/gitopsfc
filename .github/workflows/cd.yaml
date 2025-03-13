@@ -26,4 +26,27 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/gitopsfc:latest,${{ secrets.DOCKER_USERNAME }}/gitopsfc:${{ github.sha }}
           
-          
+      - name: Set up Kustomize
+        uses: imranismail/setup-kustomize@v2.1.0
+        with:
+          kustomize-version: 5.3.0
+
+      - name: Update Kubernetes resources
+        env: 
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: | 
+          cd k8s
+          kustomize edit set image goserver=${{ secrets.DOCKER_USERNAME }}/gitopsfc:${{ github.sha }}
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git add k8s/
+          git diff --staged --quiet || git commit -m "Update Kubernetes resources"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@v2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          repository: ${{ github.repository }}
