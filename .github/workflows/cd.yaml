@@ -22,8 +22,8 @@ jobs:
       - name: Build and push image
         uses: docker/build-push-action@v3
         with:
-          repository: ${{ secrets.DOCKER_USERNAME }}/gitopsfc
-          tags: ${{ github.sha }}, latest
+          context: .
           push: true
+          tags: ${{ secrets.DOCKER_USERNAME }}/gitopsfc:latest,${{ secrets.DOCKER_USERNAME }}/gitopsfc:${{ github.sha }}
           
           
