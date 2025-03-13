@@ -46,7 +46,7 @@ jobs:
           git diff --staged --quiet || git commit -m "Update Kubernetes resources"
 
       - name: Push changes
-        uses: ad-m/github-push-action@v2
+        uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository }}
