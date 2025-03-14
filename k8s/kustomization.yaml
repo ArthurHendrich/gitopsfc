@@ -7,4 +7,4 @@ resources:
 images:
 - name: goserver
   newName: h3ndr1ch/gitopsfc
-  newTag: 2543b99391bd3e82c383e2a6e57e5c3a9fe08e88
+  newTag: b0aabe15ea8fa6dc1b54ae75f76b4d48ebe88510
